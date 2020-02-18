@@ -47,7 +47,7 @@ def download_file(session, token):
 
 # Save file to temp directory
 def save_file(file):
-    path_to_save = os.path.expanduser('~') + '/himawari8_wallpaper.png'
+    path_to_save = os.path.expanduser('~') + '/himawari8.png'
     with open(path_to_save, 'wb') as f:
         f.write(file)
     return path_to_save
@@ -56,6 +56,7 @@ def save_file(file):
 def start_downloading():
     session = requests.Session()
     token = get_token(session)
+    print(f'Token {token}')
     file_response = download_file(session, token)
     if file_response.status_code == 200:
         return save_file(file_response.content)

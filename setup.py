@@ -19,11 +19,16 @@ if platform.system() == "Linux" and os.environ.get("DESKTOP_SESSION") in KDE_PLA
 setup(
     name='himawari8-wallaper',
     version='0.1',
-    packages=['himawari', 'wallpaper'],
+    packages=['himawari8', 'himawari8.wallpaper'],
     url='',
     license='',
     author='Dmitry Vasilev',
     author_email='mekon26@gmail.com',
     description='Wallpapers from himawari8 satellite',
-    install_requires=requirements
+    install_requires=requirements,
+    entry_points={
+        'console_scripts': [
+            'himawari = himawari8.main:main',
+        ]
+    }
 )
