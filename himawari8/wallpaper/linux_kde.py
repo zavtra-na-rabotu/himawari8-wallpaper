@@ -1,11 +1,12 @@
 import dbus
 
 
-def set_wallpaper(filepath, plugin='org.kde.image'):
+def set_wallpaper(path, plugin='org.kde.image'):
     script = """
-    const allDesktops = desktops();
+    var allDesktops = desktops();
+    print (allDesktops);
     for (let i = 0; i < allDesktops.length; i++) {
-        const d = allDesktops[i];
+        d = allDesktops[i];
         d.wallpaperPlugin = '%s';
         d.currentConfigGroup = Array('Wallpaper', '%s', 'General');
         d.writeConfig('Image', 'file://%s')
@@ -13,4 +14,4 @@ def set_wallpaper(filepath, plugin='org.kde.image'):
     """
     bus = dbus.SessionBus()
     plasma = dbus.Interface(bus.get_object('org.kde.plasmashell', '/PlasmaShell'), dbus_interface='org.kde.PlasmaShell')
-    plasma.evaluateScript(script % (plugin, plugin, filepath))
+    plasma.evaluateScript(script % (plugin, plugin, path))

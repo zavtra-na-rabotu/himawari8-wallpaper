@@ -1,6 +1,8 @@
+import argparse
 import logging
 import os
 import platform
+import time
 
 from himawari8.downloader import download_latest_image
 
@@ -25,11 +27,27 @@ else:
     logging.error('OS not supported')
 
 
-def main():
+def try_to_update_wallpaper():
     wallpaper_path = download_latest_image()
     if wallpaper_path != -1:
         set_wallpaper(wallpaper_path)
         print(f'Wallpaper has been successfully updated {wallpaper_path}')
+
+
+def parse_arguments():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-i', '--interval', type=int, help='wallpaper update interval in minutes')
+    return parser.parse_args()
+
+
+def main():
+    args = parse_arguments()
+    if args.interval is not None:
+        while True:
+            try_to_update_wallpaper()
+            time.sleep(args.interval * 60)
+    else:
+        try_to_update_wallpaper()
 
 
 if __name__ == '__main__':
