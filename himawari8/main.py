@@ -10,6 +10,7 @@ KDE_PLASMA_DE = ['plasma', '/usr/share/xsessions/plasma']
 WINDOW_MANAGERS = ['i3', 'awesome', '/usr/share/xsessions/bspwm']
 PLATFORM = platform.system()
 
+
 # Imports depending on OS
 if PLATFORM == 'Linux':
     de = os.environ.get('DESKTOP_SESSION')
@@ -18,13 +19,13 @@ if PLATFORM == 'Linux':
     elif de in WINDOW_MANAGERS:
         from himawari8.wallpaper.linux_feh import set_wallpaper
     else:
-        logging.error('Desktop environment not supported')
+        exit('Desktop environment not supported')
 elif PLATFORM == 'Darwin':
     from himawari8.wallpaper.osx import set_wallpaper
 elif PLATFORM == 'Windows':
     from himawari8.wallpaper.windows10 import set_wallpaper
 else:
-    logging.error('OS not supported')
+    exit('OS not supported')
 
 
 def try_to_update_wallpaper():
