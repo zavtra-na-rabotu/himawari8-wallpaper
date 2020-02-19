@@ -1,35 +1,35 @@
 import logging
 import os
 import platform
-import time
 
-from .downloader import start_downloading
+from himawari8.downloader import download_latest_image
 
-KDE_PLASMA_DE = ['/usr/share/xsessions/plasma', 'plasma']
-
+KDE_PLASMA_DE = ['plasma', '/usr/share/xsessions/plasma']
+WINDOW_MANAGERS = ['i3', 'awesome', '/usr/share/xsessions/bspwm']
+PLATFORM = platform.system()
 
 # Imports depending on OS
-if platform.system() == 'Windows':
-    from .wallpaper.windows10 import set_wallpaper
-elif platform.system() == 'Linux':
+if PLATFORM == 'Linux':
     de = os.environ.get('DESKTOP_SESSION')
     if de in KDE_PLASMA_DE:
-        from .wallpaper.linux_kde import set_wallpaper
-    elif de in ['i3', '/usr/share/xsessions/bspwm']:
-        from .wallpaper.linux_i3_bspwm import set_wallpaper
+        from himawari8.wallpaper.linux_kde import set_wallpaper
+    elif de in WINDOW_MANAGERS:
+        from himawari8.wallpaper.linux_feh import set_wallpaper
     else:
         logging.error('Desktop environment not supported')
+elif PLATFORM == 'Darwin':
+    from himawari8.wallpaper.osx import set_wallpaper
+elif PLATFORM == 'Windows':
+    from himawari8.wallpaper.windows10 import set_wallpaper
 else:
     logging.error('OS not supported')
 
 
 def main():
-    while True:
-        wallpaper_path = start_downloading()
-        if wallpaper_path != -1:
-            set_wallpaper(wallpaper_path)
-            print(f'Wallpaper has been successfully updated {wallpaper_path}')
-        time.sleep(600)
+    wallpaper_path = download_latest_image()
+    if wallpaper_path != -1:
+        set_wallpaper(wallpaper_path)
+        print(f'Wallpaper has been successfully updated {wallpaper_path}')
 
 
 if __name__ == '__main__':

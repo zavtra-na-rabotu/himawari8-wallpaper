@@ -11,7 +11,7 @@ TOKEN_LEN = 40
 
 
 # Generate name of the latest photo
-def generate_file_name():
+def generate_latest_image_name():
     now = datetime.datetime.now()
     year = now.strftime('%Y')
     month = now.strftime('%m')
@@ -32,10 +32,10 @@ def get_token(session):
 
 # Download latest photo
 def download_file(session, token):
-    file_name = generate_file_name()
+    image_name = generate_latest_image_name()
     data = {
-        'dl_path': file_name,
-        'filelist[0]': file_name,
+        'dl_path': image_name,
+        'filelist[0]': image_name,
         'action': 'dir_download_dl',
         '_method': 'POST',
         'data[FileSearch][hashUrl]': 'bDw2maKV',
@@ -53,7 +53,7 @@ def save_file(file):
     return path_to_save
 
 
-def start_downloading():
+def download_latest_image():
     session = requests.Session()
     token = get_token(session)
     file_response = download_file(session, token)

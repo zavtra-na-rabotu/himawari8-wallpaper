@@ -1,25 +1,26 @@
 import os
 import platform
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
-KDE_PLASMA_DE = ['/usr/share/xsessions/plasma', 'plasma']
+from himawari8.main import KDE_PLASMA_DE
 
 requirements = [
-    'certifi==2019.11.28',
-    'chardet==3.0.4',
-    'idna==2.8',
-    'requests==2.22.0',
-    'urllib3==1.25.8',
+    'certifi',
+    'chardet',
+    'idna',
+    'requests',
+    'urllib3',
 ]
 
 if platform.system() == 'Linux' and os.environ.get('DESKTOP_SESSION') in KDE_PLASMA_DE:
-    requirements.append('dbus-python==1.2.16')
+    requirements.append('dbus-python')
 
 setup(
     name='himawari8-wallaper',
     version='0.1',
-    packages=['himawari8', 'himawari8.wallpaper'],
+    packages=find_packages(),
+    python_requires='>=3.0',
     url='',
     license='',
     author='Dmitry Vasilev',
