@@ -1,5 +1,7 @@
 import subprocess
+import pathlib
 
 
 def set_wallpaper(path):
-    subprocess.run(["gsettings", "set", "org.cinnamon.desktop.background", "picture-uri", path])
+    uri = pathlib.Path(path).as_uri()
+    subprocess.run(["gsettings", "set", "org.cinnamon.desktop.background", "picture-uri", uri])
