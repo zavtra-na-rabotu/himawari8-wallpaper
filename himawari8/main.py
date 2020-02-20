@@ -1,5 +1,4 @@
 import argparse
-import logging
 import os
 import platform
 import time
@@ -7,6 +6,7 @@ import time
 from himawari8.downloader import download_latest_image
 
 KDE_PLASMA_DE = ['plasma', '/usr/share/xsessions/plasma']
+CINNAMON_DE = ['cinnamon']
 WINDOW_MANAGERS = ['i3', 'awesome', '/usr/share/xsessions/bspwm']
 PLATFORM = platform.system()
 
@@ -16,6 +16,8 @@ if PLATFORM == 'Linux':
     de = os.environ.get('DESKTOP_SESSION')
     if de in KDE_PLASMA_DE:
         from himawari8.wallpaper.linux_kde import set_wallpaper
+    elif de in CINNAMON_DE:
+        from himawari8.wallpaper.linux_cinnamon import set_wallpaper
     elif de in WINDOW_MANAGERS:
         from himawari8.wallpaper.linux_feh import set_wallpaper
     else:

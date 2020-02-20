@@ -3,7 +3,7 @@ import platform
 
 from setuptools import setup, find_packages
 
-from himawari8.main import KDE_PLASMA_DE
+KDE_PLASMA_DE = ['plasma', '/usr/share/xsessions/plasma']
 
 requirements = [
     'certifi',
